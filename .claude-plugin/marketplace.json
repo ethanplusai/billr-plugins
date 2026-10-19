@@ -1,0 +1,17 @@
+{
+  "name": "billr",
+  "owner": {
+    "name": "Billr",
+    "email": "help@billr.cc"
+  },
+  "metadata": {
+    "description": "Official hosted Billr integration packages."
+  },
+  "plugins": [
+    {
+      "name": "billr",
+      "source": "./",
+      "description": "Connect to hosted Billr to review unbilled work, log time and expenses, and draft invoices and estimates. Requires a Billr account. Sending or payment actions require your explicit request and permission."
+    }
+  ]
+}

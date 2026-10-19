@@ -1,0 +1,11 @@
+Billr
+Copyright 2026 Voyage Studios LLC (doing business as Billr)
+
+These integration packages derive from Billr's Apache-2.0 plugin packages.
+They contain the Billr skill, connection declarations and Billr PNG assets.
+The application, its third-party agent marks, fonts and npm dependencies are
+not bundled in this distribution. Development dependencies retain their
+respective licenses and are not included in the runtime ZIP.
+The Billr name and logo identify this project; no trademark rights or
+endorsement of any third-party service are granted by the code license.
+
