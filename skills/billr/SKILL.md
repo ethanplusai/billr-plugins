@@ -1,7 +1,7 @@
 ---
 name: billr
 description: Bill clients through Billr. Use when logging billable time or expenses, drafting or checking an invoice or estimate, asking what is unbilled or overdue, checking a balance or a payment, running an agent task billing session, or working an engagement schedule. Reads within approved permissions and drafts on request. Sending, payment and deletion actions require an explicit request and matching permissions.
-version: 1.3.0
+version: 1.3.1
 ---
 
 # Billr
@@ -51,17 +51,15 @@ and never widen it beyond what the message says.
 
 ## Authentication and scopes
 
-The distributed plugin connects to `https://mcp.billr.cc`. A self-hosted
-operator may explicitly choose their own origin's `/api/mcp` endpoint.
-There are two authentication paths:
+The distributed plugin connects to `https://mcp.billr.cc` through OAuth.
+The client discovers Billr's authorization server and opens Billr's consent
+screen, where the person chooses their business and permissions. Authentication
+and token storage are managed by the client, not by this skill.
 
-- **OAuth (preferred).** The client only needs the URL. It discovers Billr's
-  authorization server, registers itself, and sends the person to a consent
-  screen where they choose the business and the permissions. Tokens expire
-  after 30 days and refresh automatically.
-- **API key.** A `billr_sk_` key, created in the app under Agents then API
-  Keys, sent as `Authorization: Bearer <key>`. Shown once, expires after 90
-  days, revocable at any time.
+Do not read credentials from the user's machine, environment, browser storage,
+or configuration files. Do not ask the person to paste credentials into chat.
+If authentication fails, ask them to reconnect through the client's connection
+settings. This hosted plugin requires no manually supplied API key.
 
 Five permissions exist: `read`, `write`, `send`, `delete`, `payments`. The
 named profiles are:
@@ -75,13 +73,6 @@ named profiles are:
 
 Ask for the narrowest profile that does the job. Read and draft is the right
 default for almost everything in this skill.
-
-**Never write a key into a file.** Not into a config file you edit, not into a
-committed `.mcp.json`, not into a scratch note, not into your reply. If a
-client supports environment interpolation, use it (`${BILLR_API_KEY}`,
-`bearer_token_env_var`, `${env:BILLR_API_KEY}`). Never print a key back, never
-run a command that echoes one, and never paste one into a transcript. If you
-see a key in a file the person is working in, tell them and stop.
 
 ## Safe defaults
 

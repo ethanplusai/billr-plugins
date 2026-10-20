@@ -12,8 +12,6 @@ Use OAuth: sign in on Billr, choose the intended business, and approve only the 
 
 ### Claude Code
 
-Once this repository is published:
-
 ```sh
 claude plugin marketplace add ethanplusai/billr-plugins
 claude plugin install billr@billr
@@ -23,7 +21,9 @@ Open `/mcp` and authenticate Billr. To test a local checkout, run `claude --plug
 
 ### Cursor
 
-This repository includes an Agent Plugins package and a Cursor compatibility manifest. Import the local checkout using Cursor's plugin settings for testing. Marketplace installation will be available after review; there is no published marketplace listing yet.
+This repository includes an Agent Plugins package and a Cursor compatibility manifest. In Cursor Agents, open **Customize → Add → From GitHub Repository**, enter `https://github.com/ethanplusai/billr-plugins`, choose **User** scope, and import. Find Billr in the imported marketplace and click **Add**. Under **Customize → MCPs**, authenticate Billr and select only the business and permissions you need. The repository's `main` branch supports Cursor's import loader.
+
+For local development, copy the runtime package into `~/.cursor/plugins/local/billr` and run **Developer: Reload Window**. See [Cursor's local testing guide](https://cursor.com/docs/plugins). Marketplace installation will be available after review; there is no published marketplace listing yet.
 
 ### Codex and ChatGPT
 
@@ -61,3 +61,18 @@ python3 scripts/package.py
 The ZIP includes only the runtime package, README, and license files. Tests and build scripts are not installed. Automated package checks do not establish successful authentication in every client.
 
 [Documentation](https://billr.cc/docs/connect) · [Support](https://billr.cc/support) · [Privacy](https://billr.cc/legal/privacy) · [Terms](https://billr.cc/legal/terms)
+
+## Directory review notes
+
+This hosted plugin authenticates through OAuth at `https://mcp.billr.cc`.
+The skill does not read credentials from the user's environment or files.
+
+`assets/icon.png` and `assets/logo.png` are branding images. Manifest fields
+reference them for display. The Python scripts under `scripts/` generate
+metadata, validate package paths, and copy package bytes into a ZIP; the tests
+exercise those packaging checks. None executes these images. These development
+scripts and tests are not included in the runtime ZIP, and the plugin declares
+no local executable MCP server or lifecycle hooks.
+
+Billr is the product name. Similar-name and existing-connector ownership checks
+should be resolved through directory review rather than renaming the product.

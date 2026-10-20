@@ -8,7 +8,7 @@ def generated():
     server=json.loads((ROOT/'mcp.json').read_text())['mcpServers']['billr']
     url=server['url']
     return {
-        '.claude-plugin/plugin.json': base,
+        '.claude-plugin/plugin.json': {**base, 'privacyPolicyUrl': 'https://billr.cc/legal/privacy'},
         '.claude-plugin/marketplace.json': {
             'name':'billr','owner':{'name':'Billr','email':'help@billr.cc'},
             'metadata':{'description':'Official hosted Billr integration packages.'},
